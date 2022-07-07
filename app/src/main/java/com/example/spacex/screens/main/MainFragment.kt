@@ -5,12 +5,19 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.RecyclerView
 import com.example.spacex.R
 import com.example.spacex.databinding.FragmentMainBinding
+import com.example.spacex.utils.MAIN
+import com.example.spacex.utils.MainAdapter
+import com.example.spacex.viewmodels.MainViewModel
 
 class MainFragment : Fragment() {
 
     lateinit var binding: FragmentMainBinding
+    lateinit var recyclerView: RecyclerView
+    val adapter by lazy { MainAdapter() }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -18,6 +25,23 @@ class MainFragment : Fragment() {
     ): View {
         binding = FragmentMainBinding.inflate(inflater, container, false)
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        init()
+
+    }
+
+    private fun init() {
+        val viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+        viewModel.getLaunches()
+        recyclerView = binding.mainRv
+        recyclerView.adapter = adapter
+        viewModel.launches.observe(viewLifecycleOwner, {
+            adapter.setList(it.body()!!)
+        })
     }
 
 }
