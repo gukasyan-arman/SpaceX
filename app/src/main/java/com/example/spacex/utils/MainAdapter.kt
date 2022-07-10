@@ -1,23 +1,15 @@
 package com.example.spacex.utils
 
-import android.annotation.SuppressLint
-import android.os.Build
+
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import coil.transform.CircleCropTransformation
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.example.spacex.R
 import com.example.spacex.databinding.RecyclerViewItemBinding
 import com.example.spacex.models.ResponseModelItem
 import com.example.spacex.screens.main.MainFragment
-import java.text.SimpleDateFormat
-import java.time.format.DateTimeFormatter
-import java.util.*
 
 class MainAdapter: RecyclerView.Adapter<MainAdapter.MainViewHolder>() {
 

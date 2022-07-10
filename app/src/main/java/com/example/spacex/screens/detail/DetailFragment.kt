@@ -6,17 +6,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import coil.transform.CircleCropTransformation
 import com.example.spacex.R
 import com.example.spacex.databinding.FragmentDetailBinding
 import com.example.spacex.models.ResponseModelItem
+import com.example.spacex.utils.CrewAdapter
 import com.example.spacex.viewmodels.DetailViewModel
 
 class DetailFragment : Fragment() {
 
     lateinit var binding: FragmentDetailBinding
     private lateinit var currentLaunch: ResponseModelItem
+    lateinit var recyclerView: RecyclerView
+    val adapter by lazy { CrewAdapter() }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,6 +40,11 @@ class DetailFragment : Fragment() {
 
     private fun init() {
         val viewModel = ViewModelProvider(this).get(DetailViewModel::class.java)
+        viewModel.getCrew()
+
+        recyclerView = binding.crewRv
+        recyclerView.adapter = adapter
+
         binding.imageView.load(currentLaunch.links.patch.large) {
             placeholder(R.drawable.ic_launcher_foreground)
             transformations(CircleCropTransformation())
@@ -49,7 +58,10 @@ class DetailFragment : Fragment() {
         }
         binding.date.text = currentLaunch.date_local
         binding.details.text = currentLaunch.details
-        binding.crew.text = currentLaunch.crew.toString()
+
+        viewModel.crew.observe(viewLifecycleOwner, {
+            adapter.setList(it.body()!!)
+        })
     }
 
 }

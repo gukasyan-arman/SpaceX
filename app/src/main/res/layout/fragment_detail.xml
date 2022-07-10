@@ -62,23 +62,30 @@
 
         <TextView
             android:id="@+id/details"
-            android:layout_width="wrap_content"
+            android:layout_width="296dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
             android:text="Engine failure at 33 seconds and loss of vehicle"
+            android:textAlignment="center"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/date" />
 
-        <TextView
-            android:id="@+id/crew"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/crewRv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:text="Арман"
+            android:layout_marginEnd="16dp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/details" />
+            app:layout_constraintTop_toBottomOf="@+id/details"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/crew_item"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
