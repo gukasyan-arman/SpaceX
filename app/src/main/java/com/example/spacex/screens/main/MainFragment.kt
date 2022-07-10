@@ -6,9 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.spacex.R
 import com.example.spacex.databinding.FragmentMainBinding
+import com.example.spacex.models.ResponseModelItem
 import com.example.spacex.utils.MAIN
 import com.example.spacex.utils.MainAdapter
 import com.example.spacex.viewmodels.MainViewModel
@@ -42,6 +45,15 @@ class MainFragment : Fragment() {
         viewModel.launches.observe(viewLifecycleOwner, {
             adapter.setList(it.body()!!)
         })
+
+    }
+
+    companion object {
+        fun clickLaunch(model: ResponseModelItem) {
+            val bundle = Bundle()
+            bundle.putSerializable("launch", model)
+            Navigation.findNavController(MAIN, R.id.mainFragment).navigate(R.id.action_mainFragment_to_detailFragment, bundle)
+        }
     }
 
 }

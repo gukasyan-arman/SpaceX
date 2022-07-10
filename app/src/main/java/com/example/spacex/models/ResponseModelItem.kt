@@ -1,5 +1,7 @@
 package com.example.spacex.models
 
+import java.io.Serializable
+
 data class ResponseModelItem(
     val auto_update: Boolean,
     val capsules: List<Any>,
@@ -28,4 +30,13 @@ data class ResponseModelItem(
     val tbd: Boolean,
     val upcoming: Boolean,
     val window: Int
-)
+) : Serializable{
+    override fun hashCode(): Int {
+        var result = id.hashCode()
+        if(cores.isNullOrEmpty()){
+            result = 31 * result + cores.hashCode()
+        }
+        return result
+    }
+}
+

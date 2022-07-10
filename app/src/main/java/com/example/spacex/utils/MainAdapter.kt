@@ -1,8 +1,11 @@
 package com.example.spacex.utils
 
+import android.annotation.SuppressLint
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import coil.transform.CircleCropTransformation
@@ -11,6 +14,10 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.example.spacex.R
 import com.example.spacex.databinding.RecyclerViewItemBinding
 import com.example.spacex.models.ResponseModelItem
+import com.example.spacex.screens.main.MainFragment
+import java.text.SimpleDateFormat
+import java.time.format.DateTimeFormatter
+import java.util.*
 
 class MainAdapter: RecyclerView.Adapter<MainAdapter.MainViewHolder>() {
 
@@ -41,12 +48,6 @@ class MainAdapter: RecyclerView.Adapter<MainAdapter.MainViewHolder>() {
             holder.binding.success.text = "Неудача"
         }
 
-//        Glide.with(MAIN)
-//            .load(launch.links.patch.small)
-//            .centerCrop()
-//            .placeholder(R.drawable.ic_launcher_foreground)
-//            .into(holder.binding.avatar)
-
         holder.binding.avatar
             .load(launch.links.patch.small) {
                 placeholder(R.drawable.ic_launcher_foreground)
@@ -55,4 +56,17 @@ class MainAdapter: RecyclerView.Adapter<MainAdapter.MainViewHolder>() {
     }
 
     override fun getItemCount() = list.size
+
+    override fun onViewAttachedToWindow(holder: MainViewHolder) {
+        super.onViewAttachedToWindow(holder)
+        holder.itemView.setOnClickListener {
+            MainFragment.clickLaunch(list[holder.bindingAdapterPosition])
+        }
+    }
+
+    override fun onViewDetachedFromWindow(holder: MainViewHolder) {
+        holder.itemView.setOnClickListener(null)
+    }
+
 }
+
