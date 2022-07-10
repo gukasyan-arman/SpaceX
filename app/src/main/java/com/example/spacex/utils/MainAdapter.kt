@@ -4,7 +4,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
+import coil.transform.CircleCropTransformation
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.example.spacex.R
 import com.example.spacex.databinding.RecyclerViewItemBinding
 import com.example.spacex.models.ResponseModelItem
@@ -38,11 +41,17 @@ class MainAdapter: RecyclerView.Adapter<MainAdapter.MainViewHolder>() {
             holder.binding.success.text = "Неудача"
         }
 
-        Glide.with(MAIN)
-            .load(launch.links.patch.small)
-            .centerCrop()
-            .placeholder(R.drawable.ic_launcher_foreground)
-            .into(holder.binding.avatar)
+//        Glide.with(MAIN)
+//            .load(launch.links.patch.small)
+//            .centerCrop()
+//            .placeholder(R.drawable.ic_launcher_foreground)
+//            .into(holder.binding.avatar)
+
+        holder.binding.avatar
+            .load(launch.links.patch.small) {
+                placeholder(R.drawable.ic_launcher_foreground)
+                transformations(CircleCropTransformation())
+            }
     }
 
     override fun getItemCount() = list.size
