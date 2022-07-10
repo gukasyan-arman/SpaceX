@@ -40,7 +40,16 @@ class DetailFragment : Fragment() {
             placeholder(R.drawable.ic_launcher_foreground)
             transformations(CircleCropTransformation())
         }
-
+        binding.title.text = currentLaunch.name
+        binding.quantity.text = currentLaunch.cores.map { it.flight }.toString()
+        if (currentLaunch.success) {
+            binding.status.text = "Успех"
+        } else {
+            binding.status.text = "Неудача"
+        }
+        binding.date.text = currentLaunch.date_local
+        binding.details.text = currentLaunch.details
+        binding.crew.text = currentLaunch.crew.toString()
     }
 
 }
