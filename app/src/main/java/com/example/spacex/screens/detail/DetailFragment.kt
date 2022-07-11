@@ -1,5 +1,6 @@
 package com.example.spacex.screens.detail
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -14,6 +15,7 @@ import com.example.spacex.databinding.FragmentDetailBinding
 import com.example.spacex.models.ResponseModelItem
 import com.example.spacex.utils.CrewAdapter
 import com.example.spacex.viewmodels.DetailViewModel
+import java.text.SimpleDateFormat
 
 class DetailFragment : Fragment() {
 
@@ -38,6 +40,7 @@ class DetailFragment : Fragment() {
 
     }
 
+    @SuppressLint("SimpleDateFormat")
     private fun init() {
         val viewModel = ViewModelProvider(this).get(DetailViewModel::class.java)
         viewModel.getCrew()
@@ -56,7 +59,10 @@ class DetailFragment : Fragment() {
         } else {
             binding.status.text = "Неудача"
         }
-        binding.date.text = currentLaunch.date_local
+        val parser = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
+        val formatter = SimpleDateFormat("HH:mm dd.MM.yyyy")
+        val output = formatter.format(parser.parse(currentLaunch.date_utc))
+        binding.date.text = output
         binding.details.text = currentLaunch.details
 
         viewModel.crew.observe(viewLifecycleOwner, {

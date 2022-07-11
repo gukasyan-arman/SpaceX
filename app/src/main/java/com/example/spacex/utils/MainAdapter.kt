@@ -1,6 +1,7 @@
 package com.example.spacex.utils
 
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -10,6 +11,9 @@ import com.example.spacex.R
 import com.example.spacex.databinding.RecyclerViewItemBinding
 import com.example.spacex.models.ResponseModelItem
 import com.example.spacex.screens.main.MainFragment
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 class MainAdapter: RecyclerView.Adapter<MainAdapter.MainViewHolder>() {
 
@@ -31,10 +35,14 @@ class MainAdapter: RecyclerView.Adapter<MainAdapter.MainViewHolder>() {
         return MainViewHolder(binding)
     }
 
+    @SuppressLint("SimpleDateFormat")
     override fun onBindViewHolder(holder: MainViewHolder, position: Int) {
         val launch = list[position]
-        holder.binding.name.text = launch.name
-        holder.binding.date.text = launch.date_local
+        val parser = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
+        val formatter = SimpleDateFormat("dd.MM.yyyy")
+        val output = formatter.format(parser.parse(launch.date_utc))
+
+        holder.binding.date.text = output
         holder.binding.flight.text = launch.cores.map { it.flight }.toString()
 
         if (launch.success) {
