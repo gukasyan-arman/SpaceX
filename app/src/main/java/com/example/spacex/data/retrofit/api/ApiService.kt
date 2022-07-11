@@ -6,6 +6,7 @@ import com.example.spacex.utils.CREW_END_POINT
 import com.example.spacex.utils.LAUNCH_END_POINT
 import retrofit2.Response
 import retrofit2.http.GET
+import retrofit2.http.Query
 
 interface ApiService {
     @GET(LAUNCH_END_POINT)

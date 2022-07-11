@@ -17,6 +17,9 @@ class MainAdapter: RecyclerView.Adapter<MainAdapter.MainViewHolder>() {
 
     fun setList(list: List<ResponseModelItem>) {
         this.list = list.toMutableList()
+        this.list.sortWith(Comparator { lhs, rhs ->
+            if (lhs.date_utc > rhs.date_utc) -1 else if (lhs.id < rhs.id) 1 else 0
+        })
         notifyDataSetChanged()
     }
 
@@ -44,6 +47,7 @@ class MainAdapter: RecyclerView.Adapter<MainAdapter.MainViewHolder>() {
             .load(launch.links.patch.small) {
                 placeholder(R.drawable.ic_launcher_foreground)
                 transformations(CircleCropTransformation())
+                error(R.drawable.ic_launcher_foreground)
             }
     }
 
